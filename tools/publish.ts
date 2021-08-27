@@ -40,9 +40,9 @@ switch (target) {
 
   case 'page':
     console.log('\x1b[36m%s\x1b[0m', 'Run PagePublisher...');
-
-    console.log('Publish all pages: PagePublisher.publishIndex()');
-    PagePublisher.publishIndex();
+    //
+    // console.log('Publish all pages: PagePublisher.publishIndex()');
+    // PagePublisher.publishIndex();
 
     console.log('Publish all pages: PagePublisher.publishAbout()');
     PagePublisher.publishAbout();
