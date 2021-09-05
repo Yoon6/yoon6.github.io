@@ -1,7 +1,7 @@
 ---
 id: 4
 title: "Garbage Collector가 뭐야"
-subtitle: "무엇인지만 햝아보기"
+subtitle: "햝아보기"
 date: "2021.09.03"
 tags: "java, jvm, gc, garbage collector"
 ---
