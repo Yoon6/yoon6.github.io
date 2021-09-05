@@ -1,0 +1,68 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><title> HTTP의 Stateless </title><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta http-equiv="X-UA-Compatible" content="ie=edge"><link rel="shortcut icon" href="/favicon.b0d5bbc3.ico" type="image/x-icon"><link rel="stylesheet" href="/init.1321c284.css"><link rel="stylesheet" href="/article.df3435a8.css"></head><body> <header id="top-container" role="navigation"> </header> <main id="main-container"> <article id="article-container"> <h1 id="article-title"> HTTP의 Stateless </h1> <h2 id="article-subtitle"> 장단점 </h2> <time id="article-date"> 2021.08.30 </time> <section id="article-content-container"> <details><summary>Table of Contents</summary>
+<p><div class="table-of-contents"><ul><li><a href="#http%EA%B0%80-%EB%AD%90%EB%83%90%3F">HTTP가 뭐냐?</a></li><li><a href="#stateless">Stateless</a></li></ul></div></p>
+</details>
+<h2 id="http%EA%B0%80-%EB%AD%90%EB%83%90%3F">HTTP가 뭐냐?</h2>
+<ul>
+<li>
+<p>TCP/IP 네트워크 아키텍처에서 어플리케이션 계층에서 사용하는 프로토콜이다.</p>
+</li>
+<li>
+<p>자신이 보내고자 하는 데이터에 시작라인과 헤더 등을 붙여 목적지에 전송한다.</p>
+</li>
+<li>
+<p>예를들어 구글에 <code>http</code>를 검색하면 GET메소드, path= <code>/search?q=http</code> , version의 start-line과 헤더정보가 붙어 서버로 전송된다.</p>
+</li>
+<li>
+<p>GET메소드는 보통 조회를 위해 사용하고, 포함되는 데이터는 없이 요청만 한다.</p>
+</li>
+<li>
+<p>http프로토콜은 이런식이 된다.
+<img src="https://user-images.githubusercontent.com/49135657/131300993-e2a4bf3c-45c1-4249-bec9-193558cfeda2.png" alt="image"></p>
+</li>
+<li>
+<p>HTTP의 특징 중 하나로는 Stateless라는 것이다.</p>
+</li>
+</ul>
+<h2 id="stateless">Stateless</h2>
+<ul>
+<li>
+<p>서버가 클라이언트의 상태를 보존하지 않는다는 뜻이다. 클라이언트의 상태라는 것은 로그인 여부나 해당 클라이언트로부터 이전에 들어온 요청 등을 말한다.</p>
+<p><img src="https://user-images.githubusercontent.com/49135657/131301001-d1b5ff48-8e14-45d3-bdd2-a5a521ce7a70.png" alt="image"></p>
+</li>
+<li>
+<p>stateless 특징때문에 클라이언트는 한번에 요청에 모든 정보를 담아서 보내야 한다.</p>
+<p><img src="https://user-images.githubusercontent.com/49135657/131301018-3e4ee01f-e9d5-4cc1-bc95-244ec140e814.png" alt="image"></p>
+</li>
+<li>
+<p>상태를 보존하지 않기 때문에 HTTP만으로는 로그인을 유지할 수 없다. 쿠키/세션 등을 이용해서 로그인을 유지하는 방법이 있다.</p>
+</li>
+<li>
+<p>이렇게만 들으면 왜 stateless로 만든거지, 별로 아닌가 라고 생각할 수도 있다.</p>
+</li>
+<li>
+<p>하지만 stateless 특성은 큰 이점을 가진다.</p>
+<ul>
+<li>
+<p>상태를 유지한다면, 이전에 데이터를 보냈던 해당 서버하고만 통신을 할 수 있다.</p>
+<ul>
+<li>같은 서비스를 제공하더라도 물리적인 서버가 여러대 존재할 수 있다.</li>
+</ul>
+<p><img src="https://user-images.githubusercontent.com/49135657/131301049-25ab40a6-a221-4148-aff4-6c8fcd9077b5.png" alt="image"></p>
+<ul>
+<li>일련의 요청 중에 서버에 장애가 난다면 서버에 처음부터 다시 보내야한다.</li>
+</ul>
+</li>
+<li>
+<p>상태를 유지하지 않는다면, 특정 서버와 클라이언트에 의존하지 않고 통신할 수 있다.</p>
+<ul>
+<li>서버 부하에 따라 다른 서버로 요청을 보내 유동적으로 처리 할 수 있다.</li>
+<li>트래픽이 많아졌을 때, 응답 서버를 늘리기가 쉽다는 장점이 있다.</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<p>단점은 요청 데이터의 크기가 크다. 따라서 매 요청마다 요청과 응답에 많은 네트워크 자원을 사용하게 된다.</p>
+</li>
+</ul> </section> <section id="article-navigation"> <div class="article-navigation-item article-navigation-next"> <a href="/article/3.html"> <div class="article-navigation-arrow article-navigation-next">＜</div> <div class="article-navigation-content article-navigation-next"> <p class="article-navigation-title">쿠키와 세션</p> <p class="article-navigation-subtitle">HTTP 에서 로그인한 사용자를 판별하는 방법</p> </div> </a> </div> <div class="article-navigation-item article-navigation-prev"> <a href="/article/1.html"> <div class="article-navigation-arrow article-navigation-prev">＞</div> <div class="article-navigation-content article-navigation-prev"> <p class="article-navigation-title">객체지향에서의 인터페이스란?</p> <p class="article-navigation-subtitle">다형성</p> </div> </a> </div> </section> <section id="article-list-button-container"> <a href="/articles.html"> <div id="article-list-button">📚</div> </a> </section> </article> </main> <script defer src="/init.ddb7c0df.js"></script>
+</body></html>

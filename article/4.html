@@ -1,0 +1,172 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><title> Garbage Collector가 뭐야 </title><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta http-equiv="X-UA-Compatible" content="ie=edge"><link rel="shortcut icon" href="/favicon.b0d5bbc3.ico" type="image/x-icon"><link rel="stylesheet" href="/init.1321c284.css"><link rel="stylesheet" href="/article.df3435a8.css"></head><body> <header id="top-container" role="navigation"> </header> <main id="main-container"> <article id="article-container"> <h1 id="article-title"> Garbage Collector가 뭐야 </h1> <h2 id="article-subtitle"> 햝아보기 </h2> <time id="article-date"> 2021.09.03 </time> <section id="article-content-container"> <details><summary>Table of Contents</summary>
+<p><div class="table-of-contents"><ul><li><a href="#%EA%B0%80%EB%B9%84%EC%A7%80-%EC%BB%AC%EB%A0%89%ED%84%B0">가비지 컬렉터</a><ul><li><a href="#%EB%AD%90%EC%A7%80%3F">뭐지?</a></li><li><a href="#%EC%98%88%EC%8B%9C">예시</a></li><li><a href="#%EB%8F%99%EC%9E%91">동작</a></li></ul></li><li><a href="#%EC%9E%90%EB%B0%94%EC%9D%98-%EC%A0%95%EC%84%9D-%EC%98%88%EC%A0%9C-13-20">자바의 정석 예제 13-20</a></li><li><a href="#%EC%B0%B8%EA%B3%A0">참고</a></li></ul></div></p>
+</details>
+<h2 id="%EA%B0%80%EB%B9%84%EC%A7%80-%EC%BB%AC%EB%A0%89%ED%84%B0">가비지 컬렉터</h2>
+<h3 id="%EB%AD%90%EC%A7%80%3F">뭐지?</h3>
+<p>C나 C++같은 언매니지드 언어는 OS 레벨의 메모리의 직접 접근해서 메모리를 관리한다.</p>
+<p>자바는 OS위의 JVM위에서 돌아간다. 이 JVM이 알아서 메모리 상에 필요하지 않은 데이터를 해제하여 공간을 확보해준다.</p>
+<ul>
+<li>JVM의 메모리 구조
+<ul>
+<li>스택
+<ul>
+<li>힙 영역에 생성된 객체를 참조하기 위한 값들이 할당된다.</li>
+<li>메서드 작업에 필요한 메모리 공간
+<ul>
+<li>지역변수, 파라미터 등</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>힙
+<ul>
+<li>인스턴스가 생성된다.</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h3 id="%EC%98%88%EC%8B%9C">예시</h3>
+<p>지역변수로 String 변수를 만들고 값을 넣으면, 참조변수는 스택에 할당되고 String 리터럴 값은 힙 영역에 할당되게 된다.</p>
+<p><code>String str = &quot;heap&quot;;</code></p>
+<p>자바에서는 문자열에 어떤 다른 문자열을 더하면 원래 주소에 더해지는게 아니라, 새로운 인스턴스를 만들어 다른 주소를 참조하게 된다.</p>
+<p><code>str += &quot;123&quot;;</code></p>
+<p>이처럼 더하게 되면 힙 영역에는 2개의 String 리터럴이 존재하는 것이다.</p>
+<p>이때, 더 이상 참조하지 않는 <code>&quot;heap&quot;</code> 리터럴을 Garbage Collector가 삭제해주는 것이다.</p>
+<p>이렇게 더 이상 참조하지 않는 객체를 Unreachable Object라고 한다.</p>
+<h3 id="%EB%8F%99%EC%9E%91">동작</h3>
+<p>Mark → Sweep</p>
+<ul>
+<li>Mark
+<ul>
+<li>GC가 스택의 모든 변수를 스캔하면서 참조하는 오브젝트를 찾는다. 참조한 오브젝트가 참조하는 오브젝트까지 다 마킹한다.</li>
+</ul>
+</li>
+<li>Sweep
+<ul>
+<li>Mark 되어있지 않은 힙의 오브젝트들을 지운다.</li>
+</ul>
+</li>
+</ul>
+<h2 id="%EC%9E%90%EB%B0%94%EC%9D%98-%EC%A0%95%EC%84%9D-%EC%98%88%EC%A0%9C-13-20">자바의 정석 예제 13-20</h2>
+<p>다중 쓰레드를 사용하여 가비지 컬렉터를 간단히 흉내내본 예제이다.</p>
+<p>메모리 공간을 나누지 않았고, Unreachable Object 를 삭제하는게 아니라 시간에 따라 공간을 확보하는 식이다.</p>
+<pre class="hljs"><code><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">GarbageCollector</span> <span class="hljs-keyword">extends</span> <span class="hljs-title">Thread</span> </span>{
+    <span class="hljs-keyword">final</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">int</span> MAX_MEMORY = <span class="hljs-number">1000</span>;
+    <span class="hljs-keyword">int</span> usedMemory = <span class="hljs-number">0</span>;
+
+    <span class="hljs-meta">@Override</span>
+    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">run</span><span class="hljs-params">()</span> </span>{
+        <span class="hljs-keyword">while</span> (<span class="hljs-keyword">true</span>) {
+            <span class="hljs-keyword">try</span> {
+                Thread.sleep(<span class="hljs-number">10</span> * <span class="hljs-number">1000</span>);
+            } <span class="hljs-keyword">catch</span> (InterruptedException ie) {
+                System.out.println(<span class="hljs-string">&quot;Awaken by interrupt()&quot;</span>);
+            }
+
+            gc();
+            System.out.println(<span class="hljs-string">&quot;Garbage Collected. Free Memory :&quot;</span>+freeMemory());
+        }
+    }
+
+    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">gc</span><span class="hljs-params">()</span> </span>{
+        usedMemory -= <span class="hljs-number">300</span>;
+        <span class="hljs-keyword">if</span> (usedMemory &lt; <span class="hljs-number">0</span>) usedMemory = <span class="hljs-number">0</span>;
+    }
+
+    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">int</span> <span class="hljs-title">totalMemory</span><span class="hljs-params">()</span> </span>{ <span class="hljs-keyword">return</span> MAX_MEMORY; }
+    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">int</span> <span class="hljs-title">freeMemory</span><span class="hljs-params">()</span> </span>{ <span class="hljs-keyword">return</span> MAX_MEMORY - usedMemory; }
+}
+</code></pre>
+<ul>
+<li>최대 메모리는 1000이라고 한다.</li>
+<li>10초를 sleep하고, <code>gc()</code>를 실행한다.
+<ul>
+<li>사용중인 메모리를 300감소한다.</li>
+</ul>
+</li>
+</ul>
+<pre class="hljs"><code><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">GarbageCollectorTest</span> </span>{
+    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title">main</span><span class="hljs-params">(String[] args)</span> </span>{
+        GarbageCollector gc = <span class="hljs-keyword">new</span> GarbageCollector();
+        gc.setDaemon(<span class="hljs-keyword">true</span>);
+        gc.start();
+
+        <span class="hljs-keyword">int</span> requiredMemory = <span class="hljs-number">0</span>;
+
+        <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = <span class="hljs-number">0</span>; i &lt; <span class="hljs-number">20</span>; i++) {
+            requiredMemory = (<span class="hljs-keyword">int</span>) (Math.random() * <span class="hljs-number">10</span>) * <span class="hljs-number">20</span>;
+
+            <span class="hljs-keyword">if</span> (gc.freeMemory() &lt; requiredMemory || gc.freeMemory() &lt; gc.totalMemory() * <span class="hljs-number">0.4</span>) {
+                gc.interrupt();
+                <span class="hljs-keyword">try</span> {
+                    gc.join(<span class="hljs-number">100</span>);
+                } <span class="hljs-keyword">catch</span> (InterruptedException ie) { }
+            }
+
+            gc.usedMemory += requiredMemory;
+            System.out.println(<span class="hljs-string">&quot;gc.usedMemory = &quot;</span> + gc.usedMemory);
+        }
+    }
+}
+</code></pre>
+<ul>
+<li>gc 객체를 데몬 쓰레드로 만들었다.
+<ul>
+<li>데몬 쓰레드는 일반 쓰레드가 모두 종료되면 자동으로 종료되는 쓰레드이다.
+<ul>
+<li>데몬 쓰레드로 지정하지 않으면, for문을 다 돌고 메인 쓰레드가 종료되어도 gc는 다른 쓰레드에서 계속 실행되게 될 것이다.</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>랜덤 값을 메모리 사용량으로 계속 넣는다.</li>
+<li>여유공간이 필요공간보다 적거나, 여유공간이 40% 미만이면 잠자고 있는 가비지 컬렉터를 깨운다.
+<ul>
+<li>깨우지 않더라도 10초마다 작동한다.</li>
+</ul>
+</li>
+<li>깨우는 부분을 보면 <code>interrupt()</code> 외에도 <code>join()</code> 메소드가 있다.
+<ul>
+<li>gc를 깨우고 가비지 컬렉션이 시작되기 전에 메인 메소드에서 또 추가를 할 수 있으므로 기다릴 시간을 주는 것이다.</li>
+<li><code>join()</code>에 지정된 시간동안 작업을 수행하고 호출장소로 돌아온다.
+<ul>
+<li>지정된 시간동안은 메인 쓰레드가 수행되지 않는 것이다.</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<pre class="hljs"><code>gc.usedMemory = 20
+gc.usedMemory = 20
+gc.usedMemory = 20
+gc.usedMemory = 60
+gc.usedMemory = 100
+gc.usedMemory = 120
+gc.usedMemory = 160
+gc.usedMemory = 200
+gc.usedMemory = 380
+gc.usedMemory = 520
+gc.usedMemory = 520
+gc.usedMemory = 640
+Awaken by interrupt()
+Garbage Collected. Free Memory :660
+gc.usedMemory = 340
+gc.usedMemory = 360
+gc.usedMemory = 460
+gc.usedMemory = 520
+gc.usedMemory = 640
+Awaken by interrupt()
+Garbage Collected. Free Memory :660
+gc.usedMemory = 420
+gc.usedMemory = 580
+gc.usedMemory = 580
+
+Process finished with <span class="hljs-built_in">exit</span> code 0
+</code></pre>
+<ul>
+<li>실행 결과는 이런식으로 나온다.</li>
+</ul>
+<h2 id="%EC%B0%B8%EA%B3%A0">참고</h2>
+<p><a href="https://yaboong.github.io/java/2018/06/09/java-garbage-collection/">https://yaboong.github.io/java/2018/06/09/java-garbage-collection/</a></p> </section> <section id="article-navigation"> <div class="article-navigation-item article-navigation-next"> <a href="/article/5.html"> <div class="article-navigation-arrow article-navigation-next">＜</div> <div class="article-navigation-content article-navigation-next"> <p class="article-navigation-title">Java 코드가 컴파일되고 실행되기 까지</p> <p class="article-navigation-subtitle">JVM 위에서 실행되는 과정</p> </div> </a> </div> <div class="article-navigation-item article-navigation-prev"> <a href="/article/3.html"> <div class="article-navigation-arrow article-navigation-prev">＞</div> <div class="article-navigation-content article-navigation-prev"> <p class="article-navigation-title">쿠키와 세션</p> <p class="article-navigation-subtitle">HTTP 에서 로그인한 사용자를 판별하는 방법</p> </div> </a> </div> </section> <section id="article-list-button-container"> <a href="/articles.html"> <div id="article-list-button">📚</div> </a> </section> </article> </main> <script defer src="/init.ddb7c0df.js"></script>
+</body></html>

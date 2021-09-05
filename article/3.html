@@ -1,0 +1,22 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><title> 쿠키와 세션 </title><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta http-equiv="X-UA-Compatible" content="ie=edge"><link rel="shortcut icon" href="/favicon.b0d5bbc3.ico" type="image/x-icon"><link rel="stylesheet" href="/init.1321c284.css"><link rel="stylesheet" href="/article.df3435a8.css"></head><body> <header id="top-container" role="navigation"> </header> <main id="main-container"> <article id="article-container"> <h1 id="article-title"> 쿠키와 세션 </h1> <h2 id="article-subtitle"> HTTP 에서 로그인한 사용자를 판별하는 방법 </h2> <time id="article-date"> 2021.09.01 </time> <section id="article-content-container"> <details><summary>Table of Contents</summary>
+<p><div class="table-of-contents"><ul><li><a href="#%EC%BF%A0%ED%82%A4">쿠키</a></li><li><a href="#%EC%84%B8%EC%85%98">세션</a></li></ul></div></p>
+</details>
+<p>일반적으로 웹에서 사용하는 프로토콜인 HTTP는 stateless 프로토콜이다. 따라서 로그인 상태를 유지하기 위해서는 추가적인 방법이 필요하다.</p>
+<p>로그인 상태를 유지하기 위한 방법 중 하나인 쿠키 세션 방식을 알아보자.</p>
+<p>그 외에, 사용자 분석과 광고, 개인화 등을 위해 쓰이기도 한다.</p>
+<h2 id="%EC%BF%A0%ED%82%A4">쿠키</h2>
+<p>클라이언트가 로그인 인증(Authorization)을 서버로 보내면, 서버는 쿠키가 있는지 확인하고, 없다면 쿠키를 생성해서 응답 요청에 담아서 보낸다.</p>
+<p>응답 요청에서 쿠키를 받은 클라이언트는 브라우저의 쿠키 저장소에 쿠키를 저장하고, 다음 요청 때마다 쿠키를 같이 보낸다.</p>
+<p>그러면 서버는 요청 헤더에 있는 쿠키를 보고 서버 내부에 있는 쿠키와 일치하는게 있으면 해당 사용자로 인식하게 된다.
+<img src="https://user-images.githubusercontent.com/49135657/131660725-18f149ee-dfe4-42e5-b512-5d452dd0559c.png" alt="image"></p>
+<p>쿠키는 4KB이하의 String으로 이루어져 있다.</p>
+<p>쿠키의 적용을 받는 경로, 유효기간 등을 정할 수 있다.</p>
+<h2 id="%EC%84%B8%EC%85%98">세션</h2>
+<p>로그인 상태 유지를 쿠키로 하고, 사용자의 아이디와 비밀번호를 쿠키에 저장한다면, 쿠키가 유출될 경우 다른 사용자가 쿠키를 사용해서 로그인 할 수도 있다.</p>
+<p>세션은 이런 쿠키의 취약점을 보완할 수 있다.</p>
+<p>세션은 비밀번호 같은 인증정보를 서버쪽에 저장한다. 그리고 클라이언트에게 주는 쿠키에는 사용자를 식별할 수 있는 세션 ID를 저장한다.</p>
+<p>클라이언트는 세션 ID를 요청에 같이 보내고, 서버는 세션 ID를 통해 인증된 사용자인지 판별한다.</p>
+<p>서버 쪽에는 유저 이름, 만료기한 등의 정보가 저장된다.</p>
+<p>세션은 쿠키를 사용하지만, 사용자의 정보를 브라우저가 아닌 서버에서 관리한다. 클라이언트 쪽에서 관리하는 것 보다는 보안상 유리하지만, 세션을 사용자 수만큼 생성하므로, 사용자가 많아질수록 서버에 부하가 크다.</p>
+<p>세션은 timeout이 되거나, 로그아웃하면 서버에서 삭제된다.</p> </section> <section id="article-navigation"> <div class="article-navigation-item article-navigation-next"> <a href="/article/4.html"> <div class="article-navigation-arrow article-navigation-next">＜</div> <div class="article-navigation-content article-navigation-next"> <p class="article-navigation-title">Garbage Collector가 뭐야</p> <p class="article-navigation-subtitle">햝아보기</p> </div> </a> </div> <div class="article-navigation-item article-navigation-prev"> <a href="/article/2.html"> <div class="article-navigation-arrow article-navigation-prev">＞</div> <div class="article-navigation-content article-navigation-prev"> <p class="article-navigation-title">HTTP의 Stateless</p> <p class="article-navigation-subtitle">장단점</p> </div> </a> </div> </section> <section id="article-list-button-container"> <a href="/articles.html"> <div id="article-list-button">📚</div> </a> </section> </article> </main> <script defer src="/init.ddb7c0df.js"></script>
+</body></html>
