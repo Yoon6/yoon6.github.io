@@ -66,36 +66,9 @@ button {
   backdrop-filter: blur(16px);
 }
 
-.brand {
-  display: inline-flex;
-  align-items: center;
-  gap: 12px;
-  min-width: 0;
-}
-
-.brand-mark {
-  display: grid;
-  width: 42px;
-  height: 42px;
-  flex: 0 0 auto;
-  place-items: center;
-  border-radius: 8px;
-  color: var(--paper);
-  background: var(--ink);
-  font-size: 0.84rem;
-  font-weight: 800;
-}
-
-.brand strong,
-.brand small {
-  display: block;
-  line-height: 1.1;
-}
-
-.brand small {
-  margin-top: 3px;
-  color: var(--muted);
-  font-size: 0.78rem;
+.header-language {
+  display: flex;
+  justify-content: flex-start;
 }
 
 .site-nav {
@@ -643,39 +616,6 @@ button {
   line-height: 1.5;
 }
 
-.contact-layout {
-  display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: 18px;
-}
-
-.contact-link {
-  display: flex;
-  min-height: 150px;
-  gap: 14px;
-  align-items: flex-start;
-  padding: 24px;
-  border: 1px solid var(--line);
-  border-radius: 8px;
-  background: var(--surface);
-}
-
-.contact-link svg {
-  color: var(--red);
-}
-
-.contact-link span {
-  display: grid;
-  min-width: 0;
-  gap: 8px;
-  color: var(--muted);
-  overflow-wrap: anywhere;
-}
-
-.contact-link strong {
-  color: var(--ink);
-}
-
 .empty-state {
   display: grid;
   gap: 18px;
@@ -742,8 +682,7 @@ button {
 
   .project-grid,
   .focus-grid,
-  .two-column,
-  .contact-layout {
+  .two-column {
     grid-template-columns: 1fr;
   }
 
@@ -765,10 +704,6 @@ button {
 @media (max-width: 680px) {
   .site-header {
     padding: 12px 18px;
-  }
-
-  .brand {
-    align-items: flex-start;
   }
 
   .site-nav a {
@@ -827,8 +762,7 @@ button {
   }
 
   .project-card,
-  .focus-item,
-  .contact-link {
+  .focus-item {
     padding: 20px;
   }
 

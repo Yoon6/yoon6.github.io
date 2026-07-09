@@ -1,7 +1,6 @@
 import { useEffect, useMemo, useState } from 'react';
 import { Footer } from './components/Footer';
 import { Header } from './components/Header';
-import { ContactPage } from './pages/ContactPage';
 import { HomePage } from './pages/HomePage';
 import { ProjectDetailPage } from './pages/ProjectDetailPage';
 import { ProjectsPage } from './pages/ProjectsPage';
@@ -12,8 +11,7 @@ export type Route =
   | { name: 'home' }
   | { name: 'projects' }
   | { name: 'project'; slug: string }
-  | { name: 'resume' }
-  | { name: 'contact' };
+  | { name: 'resume' };
 
 const parseHash = (): Route => {
   const segments = window.location.hash.replace(/^#\/?/, '').split('/').filter(Boolean);
@@ -28,10 +26,6 @@ const parseHash = (): Route => {
 
   if (segments[0] === 'resume') {
     return { name: 'resume' };
-  }
-
-  if (segments[0] === 'contact') {
-    return { name: 'contact' };
   }
 
   return { name: 'home' };
@@ -79,7 +73,6 @@ export const App = () => {
           <ProjectDetailPage language={language} project={selectedProject} />
         )}
         {route.name === 'resume' && <ResumePage language={language} />}
-        {route.name === 'contact' && <ContactPage language={language} />}
       </main>
       <Footer language={language} />
     </div>

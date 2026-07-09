@@ -8,7 +8,7 @@ type HeaderProps = {
   onLanguageChange: (language: Language) => void;
 };
 
-const isActive = (route: Route, target: 'home' | 'projects' | 'resume' | 'contact') => {
+const isActive = (route: Route, target: 'home' | 'projects' | 'resume') => {
   if (target === 'projects') {
     return route.name === 'projects' || route.name === 'project';
   }
@@ -18,34 +18,10 @@ const isActive = (route: Route, target: 'home' | 'projects' | 'resume' | 'contac
 
 export const Header = ({ route, language, onLanguageChange }: HeaderProps) => {
   const copy = uiCopy[language];
-  const profileCopy = profile.copy[language];
 
   return (
     <header className="site-header">
-      <a className="brand" href="#/" aria-label={copy.aria.home}>
-        <span className="brand-mark">MY</span>
-        <span>
-          <strong>{profile.name}</strong>
-          <small>{profileCopy.title}</small>
-        </span>
-      </a>
-
-      <nav className="site-nav" aria-label={copy.nav.label}>
-        <a className={isActive(route, 'home') ? 'active' : ''} href="#/">
-          {copy.nav.home}
-        </a>
-        <a className={isActive(route, 'projects') ? 'active' : ''} href="#/projects">
-          {copy.nav.projects}
-        </a>
-        <a className={isActive(route, 'resume') ? 'active' : ''} href="#/resume">
-          {copy.nav.resume}
-        </a>
-        <a className={isActive(route, 'contact') ? 'active' : ''} href="#/contact">
-          {copy.nav.contact}
-        </a>
-      </nav>
-
-      <div className="header-actions" aria-label={copy.aria.externalLinks}>
+      <div className="header-language">
         <div className="language-switch" role="group" aria-label={copy.aria.language}>
           {languageOptions.map((option) => (
             <button
@@ -59,6 +35,21 @@ export const Header = ({ route, language, onLanguageChange }: HeaderProps) => {
             </button>
           ))}
         </div>
+      </div>
+
+      <nav className="site-nav" aria-label={copy.nav.label}>
+        <a className={isActive(route, 'home') ? 'active' : ''} href="#/">
+          {copy.nav.home}
+        </a>
+        <a className={isActive(route, 'projects') ? 'active' : ''} href="#/projects">
+          {copy.nav.projects}
+        </a>
+        <a className={isActive(route, 'resume') ? 'active' : ''} href="#/resume">
+          {copy.nav.resume}
+        </a>
+      </nav>
+
+      <div className="header-actions" aria-label={copy.aria.externalLinks}>
         <a className="icon-button" href={profile.githubUrl} aria-label={copy.aria.github}>
           <Github size={18} aria-hidden="true" />
         </a>

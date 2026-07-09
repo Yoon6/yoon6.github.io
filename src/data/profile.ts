@@ -60,13 +60,11 @@ export const uiCopy = {
       home: 'Home',
       projects: 'Projects',
       resume: 'Resume',
-      contact: 'Contact',
     },
     actions: {
       viewProjects: 'View projects',
       openProject: 'Open project',
       resume: 'Resume',
-      contact: 'Contact',
       github: 'GitHub',
       email: 'Email',
       location: 'Location',
@@ -121,10 +119,6 @@ export const uiCopy = {
       errorTitle: 'Typst renderer unavailable',
       fallbackError: 'The Typst document could not be rendered.',
     },
-    contactPage: {
-      eyebrow: 'Contact',
-      title: 'Work inquiries and project conversations',
-    },
   },
   ko: {
     document: {
@@ -136,13 +130,11 @@ export const uiCopy = {
       home: '홈',
       projects: '프로젝트',
       resume: '이력서',
-      contact: '연락',
     },
     actions: {
       viewProjects: '프로젝트 보기',
       openProject: '프로젝트 열기',
       resume: '이력서',
-      contact: '연락하기',
       github: 'GitHub',
       email: '이메일',
       location: '위치',
@@ -197,10 +189,6 @@ export const uiCopy = {
       errorTitle: 'Typst 렌더러를 사용할 수 없습니다',
       fallbackError: 'Typst 문서를 렌더링하지 못했습니다.',
     },
-    contactPage: {
-      eyebrow: '연락',
-      title: '업무 문의와 프로젝트 대화',
-    },
   },
 } satisfies Record<Language, {
   document: {
@@ -212,13 +200,11 @@ export const uiCopy = {
     home: string;
     projects: string;
     resume: string;
-    contact: string;
   };
   actions: {
     viewProjects: string;
     openProject: string;
     resume: string;
-    contact: string;
     github: string;
     email: string;
     location: string;
@@ -249,7 +235,6 @@ export const uiCopy = {
     links: string;
   };
   resumePage: Record<string, string>;
-  contactPage: Record<string, string>;
 }>;
 
 export const statusLabels: Record<Language, Record<ProjectStatus, string>> = {
@@ -376,7 +361,7 @@ export const projects: Project[] = [
         title: 'Portfolio System',
         subtitle: 'Data-driven portfolio shell for GitHub Pages.',
         summary:
-          'A clean React site structure with landing, project introduction, detail, resume, and contact pages.',
+          'A clean React site structure with landing, project introduction, detail, and resume pages.',
         role: 'Frontend architecture',
         highlights: [
           'Uses hash routes so project detail pages work on static hosting.',

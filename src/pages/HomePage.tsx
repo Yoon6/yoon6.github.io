@@ -42,7 +42,7 @@ export const HomePage = ({ language }: HomePageProps) => {
         </div>
         <div className="hero-strip">
           <span>{profileCopy.availability}</span>
-          <a href="#/contact">{copy.actions.contact}</a>
+          <a href={`mailto:${profile.email}`}>{copy.actions.email}</a>
         </div>
       </section>
 
