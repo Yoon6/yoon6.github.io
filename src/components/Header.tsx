@@ -1,4 +1,4 @@
-import { FileText, Github, Mail } from 'lucide-react';
+import { Github, Mail } from 'lucide-react';
 import type { Route } from '../App';
 import { languageOptions, profile, type Language, uiCopy } from '../data/profile';
 
@@ -55,10 +55,6 @@ export const Header = ({ route, language, onLanguageChange }: HeaderProps) => {
         </a>
         <a className="icon-button" href={`mailto:${profile.email}`} aria-label={copy.aria.email}>
           <Mail size={18} aria-hidden="true" />
-        </a>
-        <a className="button button-compact" href="#/resume">
-          <FileText size={16} aria-hidden="true" />
-          {copy.actions.resume}
         </a>
       </div>
     </header>
